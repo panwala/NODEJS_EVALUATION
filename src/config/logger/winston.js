@@ -2,13 +2,13 @@
  * Create the winston logger instance
  */
 
-import { createLogger, format, transports } from "winston";
+const { createLogger, format, transports } = require("winston");
 // import { constants as APP_CONST } from "../constants/application";
 const { combine, timestamp, label, printf, colorize } = format;
 
 // TO-DO create separate file for constant if need to add more constant
 // const LOG_LABEL = 'UBER_LOGS';
-const LOG_LABEL = "JOY_LOGS";
+const LOG_LABEL = "NOD_EVALUATION_LOGS";
 const LOG_TIMEZONE = "Asia/Kolkata";
 const LOCALE = "en-US";
 const ERROR_LOG_FILE = "error.log";

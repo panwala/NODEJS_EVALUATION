@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { logger, level } from "../../config/logger/logger";
-const URL = process.env.MONGO_URL;
+const URL =
+  process.env.MONGO_URL ||
+  "mongodb+srv://prempanwala710:mHJKrzkm6SrZ5qxG@cluster0.rmgmcsf.mongodb.net/test";
 const OPEN_EVENT = "open";
 const ERROR_EVENT = "error";
 

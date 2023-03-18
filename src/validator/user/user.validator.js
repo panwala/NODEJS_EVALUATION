@@ -6,7 +6,7 @@ export const validate = (method) => {
   switch (method) {
     case USER_CONSTANTS.CREATE_USER: {
       error = [
-        body("userName", "userName should not be empty").not().isEmpty(),
+        body("user_name", "userName should not be empty").not().isEmpty(),
         body("email", "Invalid Email")
           .not()
           .isEmpty()
@@ -17,9 +17,9 @@ export const validate = (method) => {
           .not()
           .isEmpty()
           .isLength(10),
-        body("Address", "Address should not be empty").not().isEmpty(),
+        body("address", "Address should not be empty").not().isEmpty(),
         body("gender", "gender should not be empty").not().isEmpty(),
-        body("DOB", "Date of birth should be in valid format")
+        body("dob", "Date of birth should be in valid format")
           .not()
           .isEmpty()
           .isDate(),
@@ -31,24 +31,6 @@ export const validate = (method) => {
         body("email", "Invalid Email").not().isEmpty().isEmail(),
         body("password", "Password should not be empty").not().isEmpty(),
       ];
-      break;
-    }
-    case USER_CONSTANTS.REMOVE_SINGLE_USER: {
-      error = [
-        /*param("userId").custom(userExist)*/
-      ];
-      break;
-    }
-    case USER_CONSTANTS.GET_SINGLE_USER: {
-      error = [param("userId").custom(userExist)];
-      break;
-    }
-    case USER_CONSTANTS.UPDATE_SINGLE_USER: {
-      error = [param("userId").custom(userExist)];
-      break;
-    }
-    case USER_CONSTANTS.FORGOT_PASSWORD: {
-      error = [body("email", "Invalid Email").not().isEmpty().isEmail()];
       break;
     }
   }

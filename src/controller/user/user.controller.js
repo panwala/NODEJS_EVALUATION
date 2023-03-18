@@ -5,6 +5,7 @@ import { createTokens } from "../../helper/jwt_auth/jwt_auth";
 import nodemailer from "nodemailer";
 const CURRENT_USER = "currentUser";
 import { handleResponse, encrypt, decrypt } from "../../helper/utility";
+import jwt from "jsonwebtoken";
 import {
   BadRequestError,
   InternalServerError,
@@ -52,7 +53,7 @@ export const removeSingleUser = async (req, res, next) => {
 export const getAllUser = async (req, res, next) => {
   try {
     logger.log(level.info, `✔ Controller getAllUser()`);
-    const userData = await Users.findData({});
+    const userData = await Users.findData();
     let dataObject = {
       message: "user details fetched successfully.",
       data: userData,
@@ -68,8 +69,8 @@ export const getAllUser = async (req, res, next) => {
 export const getSingleUser = async (req, res, next) => {
   try {
     logger.log(level.info, `✔ Controller getSingleUser()`);
-    const userData = await Users.findOneDocument({
-      _id: mongoose.Types.ObjectId(req.params.userId),
+    let userData = await Users.findOneDocument({
+      _id: mongoose.Types.ObjectId(req[CURRENT_USER]._id),
     });
     let dataObject = {
       message: "user details fetched successfully.",
@@ -86,15 +87,28 @@ export const getSingleUser = async (req, res, next) => {
 export const updateSingleUser = async (req, res, next) => {
   try {
     logger.log(level.info, `✔ Controller updateSingleUser()`);
-    let { userName, email, password, mobile_no, Address, gender, DOB } =
-      req.body;
+    let {
+      user_name,
+      email,
+      password,
+      mobile_no,
+      address,
+      gender,
+      dob,
+      no_of_followers,
+      no_of_following,
+      no_of_posts,
+    } = req.body;
     let updateDeviceObject = {
-      userName,
+      user_name,
       email,
       mobile_no,
-      Address,
+      address,
       gender,
-      DOB,
+      dob,
+      no_of_followers,
+      no_of_following,
+      no_of_posts,
     };
     if (password) {
       password = await encrypt(password);
@@ -118,7 +132,7 @@ export const updateSingleUser = async (req, res, next) => {
     return next(new InternalServerError());
   }
 };
-export const login = async (req, res, next) => {
+export const authenticateLogin = async (req, res, next) => {
   try {
     logger.log(level.info, `✔ Controller login()`);
     const { email, password } = req.body;
@@ -126,13 +140,11 @@ export const login = async (req, res, next) => {
       { email },
       { createdAt: 0, updatedAt: 0 }
     );
-    console.log("userData", userData);
     const validateUserData = await decrypt(password, userData[0].password);
     let payload = {
       _id: userData[0]._id,
     };
     let tokens = await createTokens(payload);
-    console.log(tokens);
     delete userData[0].password;
     if (validateUserData) {
       let dataObject = {

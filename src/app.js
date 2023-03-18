@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(morgan(MORGAN_DEV_FORMAT));
 app.set("view engine", "ejs");
 const PATH = {
-  API: "/api/v1",
+  API: "/api/",
 };
 app.use(PATH.API, ApiRoutes);
 
@@ -23,4 +23,5 @@ app.use((err, req, res, _next) => {
   handleError(err, res);
 });
 
-export default app;
+// export default app;
+module.exports = app;

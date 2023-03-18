@@ -1,11 +1,15 @@
 import jwt from "jsonwebtoken";
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+const ACCESS_TOKEN_SECRET =
+  process.env.ACCESS_TOKEN_SECRET ||
+  "CIopPGYk+6qV5/WCx21c43D8g0cyODl4sFCEF4IAiBFaOTTN+ehIXDapd527xMp/kXoiQq2P/t8D3X6/IIJaOA==";
+const REFRESH_TOKEN_SECRET =
+  process.env.REFRESH_TOKEN_SECRET ||
+  "CIopPGYk+6qV5/WCx21c43D8g0cyODl4sFCEF4IAiBFaOTTN+ehIXDapd527xMp/kXoiQq2P/t8D3X6/IIJaOA==";
 const ACCESS_TOKEN_EXPIRATION = {
-  expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
+  expiresIn: process.env.ACCESS_TOKEN_EXPIRATION || "1440m",
 };
 const REFRESH_TOKEN_EXPIRATION = {
-  expiresIn: process.env.REFRESH_TOKEN_EXPIRATION,
+  expiresIn: process.env.REFRESH_TOKEN_EXPIRATION || "30m",
 };
 
 export const createTokens = async (payload) => {
