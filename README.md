@@ -1,7 +1,7 @@
 # NODEJS_EVALUATION
 
 
-First Intall all dependencies using below command:
+First Install all dependencies using below command:
 npm install
 
 then simply run the below command to run project on your local computer
