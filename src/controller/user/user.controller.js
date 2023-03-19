@@ -149,7 +149,7 @@ export const authenticateLogin = async (req, res, next) => {
     if (validateUserData) {
       let dataObject = {
         message: "User login successfully.",
-        data: { userData, token: tokens },
+        data: {token: tokens },
       };
       return handleResponse(res, dataObject);
     }
